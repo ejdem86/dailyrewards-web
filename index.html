@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <style>
+        #image-container {
+            width: 50%;
+            perspective: 1000px;
+            margin: auto;
+        }
+
+        #card {
+            width: 200px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        #card img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+        }
+
+        #card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        #flipped-image {
+            transform: rotateY(180deg);
+        }
+
+        .parent-div {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 660px;
+            /* Set the maximum width of the parent div */
+            margin: 0 auto;
+            /* Center the parent div */
+        }
+
+        .child-div {
+            flex: 1 0 calc(20% - 20px);
+            /* Adjust the percentage for the desired number of columns */
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .child-div img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="image-container" onclick="getNewReward()">
+        <div id="card">
+            <img id="main-image" src="/static/back.jpg"
+                alt="Initial Image">
+            <img id="flipped-image" src="" alt="Flipped Image">
+        </div>
+    </div>
+
+    <div id="parentDiv" class="parent-div"></div>
+
+    <script>
+        function getNewReward() {
+            // Make a GET request to 127.0.0.1:8080
+            fetch('/api/one?user_id=Ejdem%20Ejdemski')
+                .then(response => response.json())
+                .then(data => {
+                    // check for error first
+                    if (data.error !== undefined) {
+                        alert(data.error);
+                        return;
+                    }
+                    // Update the flipped image source
+                    console.log(data);
+                    document.getElementById('flipped-image').src = data.Image;
+
+                    // Flip the card with a delay to allow the image source to update
+                    setTimeout(() => {
+                        document.getElementById('card').classList.toggle('flipped');
+                        confettiFN();
+                    }, 50);
+
+                    setTimeout(() => {
+                        fetchDataAndGenerateDivs();
+                    }, 100)
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function fetchDataAndGenerateDivs() {
+            fetch('/api/all?user_id=Ejdem%20Ejdemski')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+
+                    var parentDiv = document.getElementById("parentDiv");
+                    parentDiv.innerHTML = ""; // Clear existing content
+
+                    data.forEach(function (group) {
+                        group.Rewards.forEach(function (item) {
+                            var childDiv = document.createElement("div");
+                            childDiv.classList.add("child-div");
+
+                            if (!item.Active) {
+                                childDiv.innerHTML += "<img src='" + item.Image + "' alt='Active Image'>";
+                            } else {
+                                childDiv.innerHTML += "<img src='/static/back.jpg' alt='Generic Image'>";
+                            }
+
+                            parentDiv.appendChild(childDiv);
+                        });
+                    });
+                });
+        }
+
+        function confettiFN() {
+            const defaults = {
+                spread: 360,
+                ticks: 50,
+                gravity: 0,
+                decay: 0.94,
+                startVelocity: 30,
+                shapes: ["star"],
+                colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
+            };
+
+            function shoot() {
+                confetti({
+                    ...defaults,
+                    particleCount: 40,
+                    scalar: 1.2,
+                    shapes: ["star"],
+                });
+
+                confetti({
+                    ...defaults,
+                    particleCount: 10,
+                    scalar: 0.75,
+                    shapes: ["circle"],
+                });
+            }
+
+            setTimeout(shoot, 0);
+            setTimeout(shoot, 100);
+            setTimeout(shoot, 200);
+        }
+    </script>
+
+</body>
+
+</html>
