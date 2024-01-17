@@ -62,6 +62,7 @@
 </head>
 
 <body>
+    <div id="user-div"><input id="user-name" /></div>
     <div id="image-container" onclick="getNewReward()">
         <div id="card">
             <img id="main-image" src="https://ejdem86.github.io/dailyrewards-web/back.jpg"
@@ -75,7 +76,7 @@
     <script>
         function getNewReward() {
             // Make a GET request to 127.0.0.1:8080
-            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/one?user_id=Ejdem%20Ejdemski')
+            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/one?user_id=' + document.getElementById('user-name').value)
                 .then(response => response.json())
                 .then(data => {
                     // check for error first
@@ -101,7 +102,7 @@
         }
 
         function fetchDataAndGenerateDivs() {
-            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/all?user_id=Ejdem%20Ejdemski')
+            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/all?user_id=' + document.getElementById('user-name').value)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
