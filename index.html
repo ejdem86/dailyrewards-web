@@ -126,7 +126,7 @@
                     }
                     // Update the flipped image source
                     console.log(data);
-                    document.getElementById('flipped-image').src = data.Image;
+                    document.getElementById('flipped-image').src = data.image;
 
                     // Flip the card with a delay to allow the image source to update
                     setTimeout(() => {
@@ -151,14 +151,14 @@
                     parentDiv.innerHTML = ""; // Clear existing content
 
                     data.forEach(function (group) {
-                        group.Rewards.forEach(function (item) {
+                        group.rewards.forEach(function (item) {
                             var childDiv = document.createElement("div");
                             childDiv.classList.add("child-div");
 
                             if (!item.Active) {
-                                childDiv.innerHTML += "<img src='" + item.Image + "' alt='Active Image'>";
+                                childDiv.innerHTML += "<img src='" + item.image + "' alt='" + item.name + "'>";
                             } else {
-                                childDiv.innerHTML += "<img src='https://ejdem86.github.io/dailyrewards-web/static/back.jpg' alt='Generic Image'>";
+                                childDiv.innerHTML += "<img src='https://ejdem86.github.io/dailyrewards-web/static/back.jpg' alt='" + item.name + "'>";
                             }
 
                             parentDiv.appendChild(childDiv);
