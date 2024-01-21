@@ -149,15 +149,19 @@
                             childDiv.classList.add("child-div");
 
                             if (!item.Active) {
-                                childDiv.innerHTML += "<img src='" + item.image + "' alt='" + item.name + "'>";
+                                childDiv.innerHTML += "<img src='" + item.image + "' alt='" + item.name + "' onclick='showName()'>";
                             } else {
-                                childDiv.innerHTML += "<img src='https://ejdem86.github.io/dailyrewards-web/static/back.jpg' alt='" + item.name + "'>";
+                                childDiv.innerHTML += "<img src='https://ejdem86.github.io/dailyrewards-web/static/back.jpg' alt='" + item.name + "' onclick='showName()'>";
                             }
 
                             parentDiv.appendChild(childDiv);
                         });
                     });
                 });
+        }
+
+        function showName() {
+            alert(this.alt);
         }
 
         function confettiFN() {
