@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
     <style>
         .wrapper { 
-          border : 2px solid #000; 
+          margin : 2px; 
           overflow:hidden;
         }
 
@@ -16,17 +16,13 @@
            padding: 10px;
         }
         .top-div {
-          background-color: gray;
           float:left; 
           margin-right:20px;
           width:140px;
-          border-right:2px solid #000;
         }
         .bottom-div { 
-          background-color: white;
           overflow:hidden;
           margin:10px;
-          border:2px dashed #ccc;
           min-height:170px;
         }
 
@@ -35,8 +31,6 @@
             float: none;
             margin-right:0;
             width:auto;
-            border:0;
-            border-bottom:2px solid #000;    
           }
         }
         
@@ -77,6 +71,7 @@
             /* Set the maximum width of the parent div */
             margin: 0 auto;
             /* Center the parent div */
+            margin-top: 20px;
         }
 
         .child-div {
@@ -84,7 +79,6 @@
             /* Adjust the percentage for the desired number of columns */
             margin: 10px;
             padding: 10px;
-            border: 1px solid #ccc;
             text-align: center;
         }
 
@@ -97,7 +91,6 @@
 
 <body>
     <div>
-        <div id="user-div"><input id="user-name" /></div>
         <div id="image-container" class="top-div" onclick="getNewReward()">
             <div id="card">
                 <img id="main-image" src="https://ejdem86.github.io/dailyrewards-web/static/back.jpg" alt="Initial Image">
