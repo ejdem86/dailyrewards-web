@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Form</title>
+</head>
+<body>
+
+  <form id="myForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="user_id">UserID:</label>
+    <input type="text" id="userId" name="userId" required><br>
+
+    <!-- Item 1 -->
+    <label for="itemName1">Item 1 Name:</label>
+    <input type="text" id="itemName1" name="itemName1" required>
+    <label for="itemImageUrl1">Item 1 Image URL:</label>
+    <input type="text" id="itemImageUrl1" name="itemImageUrl1" required>
+    <label for="itemValue1">Item 1 Value:</label>
+    <input type="number" id="itemValue1" name="itemValue1" required><br>
+
+    <!-- Item 2 -->
+    <label for="itemName2">Item 2 Name:</label>
+    <input type="text" id="itemName2" name="itemName2" required>
+    <label for="itemImageUrl2">Item 2 Image URL:</label>
+    <input type="text" id="itemImageUrl2" name="itemImageUrl2" required>
+    <label for="itemValue2">Item 2 Value:</label>
+    <input type="number" id="itemValue2" name="itemValue2" required><br>
+
+    <!-- Item 3 -->
+    <label for="itemName3">Item 3 Name:</label>
+    <input type="text" id="itemName3" name="itemName3" required>
+    <label for="itemImageUrl3">Item 3 Image URL:</label>
+    <input type="text" id="itemImageUrl3" name="itemImageUrl3" required>
+    <label for="itemValue3">Item 3 Value:</label>
+    <input type="number" id="itemValue3" name="itemValue3" required><br>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+
+  <script>
+    // Function to submit the form
+    function submitForm() {
+      // Get form data
+      const formData = {
+        id: document.getElementById('name').value,
+        rewards: [
+          {
+            name: document.getElementById('itemName1').value,
+            image: document.getElementById('itemImageUrl1').value,
+            chance: parseInt(document.getElementById('itemValue1').value)
+          },
+          {
+            name: document.getElementById('itemName2').value,
+            image: document.getElementById('itemImageUrl2').value,
+            chance: parseInt(document.getElementById('itemValue2').value)
+          },
+          {
+            name: document.getElementById('itemName3').value,
+            image: document.getElementById('itemImageUrl3').value,
+            chance: parseInt(document.getElementById('itemValue3').value)
+          }
+        ]
+      };
+
+      // Convert data to JSON
+      const jsonData = JSON.stringify(formData);
+
+      // Specify the URL to send the JSON data
+      const url = 'https://dailyreward-bjmer7u7ka-uc.a.run.app/api/add_group?user_id=' + document.getElementById('userId').value;
+
+      // Send data to the server (in this example, using fetch)
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonData
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the server response if needed
+        console.log('Server response:', data);
+      })
+      .catch(error => {
+        console.error('Error sending data:', error);
+      });
+    }
+  </script>
+
+</body>
+</html>

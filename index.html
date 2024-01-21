@@ -100,7 +100,7 @@
         <div id="user-div"><input id="user-name" /></div>
         <div id="image-container" class="top-div" onclick="getNewReward()">
             <div id="card">
-                <img id="main-image" src="https://ejdem86.github.io/dailyrewards-web/back.jpg" alt="Initial Image">
+                <img id="main-image" src="https://ejdem86.github.io/dailyrewards-web/static/back.jpg" alt="Initial Image">
                 <img id="flipped-image" src="" alt="Flipped Image">
             </div>
         </div>
@@ -109,9 +109,14 @@
     </div>
 
     <script>
+        function getUserID() {
+            const queryParams = new URLSearchParams(window.location.search);
+            return queryParams.get("userID") || 'noUserID';
+        }
+        
         function getNewReward() {
             // Make a GET request to 127.0.0.1:8080
-            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/one?user_id=' + document.getElementById('user-name').value)
+            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/one?user_id=' + getUserID())
                 .then(response => response.json())
                 .then(data => {
                     // check for error first
@@ -137,7 +142,7 @@
         }
 
         function fetchDataAndGenerateDivs() {
-            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/all?user_id=' + document.getElementById('user-name').value)
+            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/all?user_id=' + getUserID())
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -153,7 +158,7 @@
                             if (!item.Active) {
                                 childDiv.innerHTML += "<img src='" + item.Image + "' alt='Active Image'>";
                             } else {
-                                childDiv.innerHTML += "<img src='https://ejdem86.github.io/dailyrewards-web/back.jpg' alt='Generic Image'>";
+                                childDiv.innerHTML += "<img src='https://ejdem86.github.io/dailyrewards-web/static/back.jpg' alt='Generic Image'>";
                             }
 
                             parentDiv.appendChild(childDiv);
