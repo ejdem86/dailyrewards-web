@@ -95,6 +95,8 @@
             <div id="card">
                 <img id="main-image" src="https://ejdem86.github.io/dailyrewards-web/static/back.jpg" alt="Initial Image">
                 <img id="flipped-image" src="" alt="Flipped Image">
+                <span id="reward-name"></span>
+                <span id="points"></span>
             </div>
         </div>
 
@@ -109,7 +111,7 @@
         
         function getNewReward() {
             // Make a GET request to 127.0.0.1:8080
-            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/one?user_id=' + getUserID())
+            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/rewards/one?user_id=' + getUserID())
                 .then(response => response.json())
                 .then(data => {
                     // check for error first
@@ -120,6 +122,7 @@
                     // Update the flipped image source
                     console.log(data);
                     document.getElementById('flipped-image').src = data.image;
+                    document.getElementById('reward-name').innerHTML = "Gratulacje! Wygrałaś <b>" + data.name + "</b>!";
 
                     // Flip the card with a delay to allow the image source to update
                     setTimeout(() => {
@@ -135,7 +138,7 @@
         }
 
         function fetchDataAndGenerateDivs() {
-            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/api/all?user_id=' + getUserID())
+            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/rewards/all?user_id=' + getUserID())
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -148,6 +151,10 @@
                             var childDiv = document.createElement("div");
                             childDiv.classList.add("child-div");
 
+                            if (item.small_reward) {
+                                return;
+                            }
+
                             if (!item.active) {
                                 childDiv.innerHTML += "<img src='" + item.image + "' alt='" + item.name + "' onclick='alert(\"" + item.name + "\")'>";
                             } else {
@@ -158,6 +165,15 @@
                         });
                     });
                 });
+        }
+        fetchDataAndGenerateDivs();
+
+        function getProfile() {
+            fetch('https://dailyreward-bjmer7u7ka-uc.a.run.app/profile?user_id=' + getUserID())
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('points').innerHTML = data.points;
+                })
         }
 
         function confettiFN() {
