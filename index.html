@@ -124,7 +124,9 @@
                     // Update the flipped image source
                     console.log(data);
                     document.getElementById('flipped-image').src = data.image;
-                    document.getElementById('reward-name').innerHTML = "Gratulacje! Wygrałaś <b>" + data.name + "</b>!";
+                    setTimeout(() => {
+                        document.getElementById('reward-name').innerHTML = "Gratulacje! Wygrałaś <b>" + data.name + "</b>!";
+                    }, 200)
 
                     // Flip the card with a delay to allow the image source to update
                     setTimeout(() => {
@@ -157,10 +159,10 @@
                                 return;
                             }
 
-                            if (!item.active) {
-                                childDiv.innerHTML += "<img src='" + item.image + "' alt='" + item.name + "' onclick='alert(\"" + item.name + "\")'>";
-                            } else {
+                            if (item.active) {
                                 childDiv.innerHTML += "<img src='https://ejdem86.github.io/dailyrewards-web/static/back.jpg' alt='" + item.name + "' onclick='alert(\"Odkryj mnie!\")'>";
+                            } else {
+                                childDiv.innerHTML += "<img src='" + item.image + "' alt='" + item.name + "' onclick='alert(\"" + item.name + "\")'>";
                             }
 
                             parentDiv.appendChild(childDiv);
